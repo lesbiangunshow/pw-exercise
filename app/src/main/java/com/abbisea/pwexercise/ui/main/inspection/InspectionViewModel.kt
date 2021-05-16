@@ -149,6 +149,8 @@ class InspectionViewModel @Inject constructor(
         }
     }
 
+    // below two functions are prime for refactoring, basically do the same thing and AnswerEntity
+    // contains vars so can be populated from PendingInspection after the fact.
     private fun parsePendingInspection(
         inspection: Inspection,
         pending: PendingInspection
@@ -174,6 +176,10 @@ class InspectionViewModel @Inject constructor(
         listEntities.postValue(inspectionEntityList)
     }
 
+    // key assumption: the two or more answer values are themselves prompts provided by the
+    // Inspection model as ultimately specified by the api. If the answer values were to be added
+    // by the end user, I would provide a QuestionEntity to the adapter, which would handle
+    // adding AnswerEntities to the list on request
     private fun parseInspection(inspection: Inspection) {
         val inspectionEntityList = mutableListOf<InspectionListEntity>()
         for (question in inspection.questions) {
