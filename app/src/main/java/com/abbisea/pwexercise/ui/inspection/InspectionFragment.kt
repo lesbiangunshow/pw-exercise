@@ -1,4 +1,4 @@
-package com.abbisea.pwexercise.ui.main.inspection
+package com.abbisea.pwexercise.ui.inspection
 
 import android.os.Bundle
 import android.view.LayoutInflater

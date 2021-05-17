@@ -1,4 +1,4 @@
-package com.abbisea.pwexercise.ui.main.inspection
+package com.abbisea.pwexercise.ui.inspection
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.SavedStateHandle
@@ -25,11 +25,11 @@ class InspectionViewModel @Inject constructor(
     val showSuccessToast = SingleLiveEvent<Nothing>()
     val showSubmissionErrorToast = SingleLiveEvent<Nothing>()
 
-    var isSubmitting: Boolean = false // I dont like this but i'm short on time
+    private var isSubmitting: Boolean = false // I dont like this but i'm short on time
 
     private var pendingInspection: PendingInspection? = null
-    val location = savedStateHandle.get<String>("location") ?: ""
-    lateinit var inspection: Inspection
+    private val location = savedStateHandle.get<String>("location") ?: ""
+    private lateinit var inspection: Inspection
 
     init {
         val isResumingInspection = savedStateHandle.get<Boolean>("isResumed") ?: false
@@ -155,14 +155,13 @@ class InspectionViewModel @Inject constructor(
         inspection: Inspection,
         pending: PendingInspection
     ) {
-        var answerIndex = 0
         val inspectionEntityList = mutableListOf<InspectionListEntity>()
         for (question in inspection.questions) {
             inspectionEntityList.add(
                 QuestionEntity(question.displayText)
             )
-            for (answer in question.answers) {
-                val pendingAnswer = pending.answers[answerIndex]
+            for ((index, answer) in question.answers.withIndex()) {
+                val pendingAnswer = pending.answers[index]
                 inspectionEntityList.add(
                     AnswerEntity(
                         answer,
@@ -170,7 +169,6 @@ class InspectionViewModel @Inject constructor(
                         pendingAnswer == null
                     )
                 )
-                answerIndex++
             }
         }
         listEntities.postValue(inspectionEntityList)

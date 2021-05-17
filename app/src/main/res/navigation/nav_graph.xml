@@ -13,7 +13,7 @@
     </fragment>
     <fragment
         android:id="@+id/inspectionFragment"
-        android:name="com.abbisea.pwexercise.ui.main.inspection.InspectionFragment"
+        android:name="com.abbisea.pwexercise.ui.inspection.InspectionFragment"
         android:label="InspectionFragment" >
         <argument android:name="inspectionId"
             app:argType="integer" />
